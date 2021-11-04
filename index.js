@@ -1,22 +1,13 @@
-const refs = {
-    daysNum: document.querySelector('[data-value="days"]'),
-    hourNum: document.querySelector('[data-value="hours"]'),
-    minNum: document.querySelector('[data-value="mins"]'),
-    secNum: document.querySelector('[data-value="secs"]'),
-    valuesBox: document.querySelector('div#timer-1'),
-    values: document.querySelectorAll('div.field'),
-}
-
-refs.valuesBox.style = 'display: flex; justify-content: center;';
-refs.values.forEach(value => {
-    value.style = "display: flex; flex-direction: column; align-items: center; margin:10px;"
-});
-
-
 class CountdownTimer {
     constructor ({selector, targetDate}) {
         this.selector = selector;
         this.targetDate = targetDate;
+        this.daysNum = document.querySelector('[data-value="days"]');
+        this.hourNum = document.querySelector('[data-value="hours"]');
+        this.minNum = document.querySelector('[data-value="mins"]');
+        this.secNum = document.querySelector('[data-value="secs"]');
+        this.valuesBox = document.querySelector('div#timer-1');
+        this.values = document.querySelectorAll('div.field');
     }
 
     getTime (val) {
@@ -35,17 +26,25 @@ class CountdownTimer {
             const currentDate = new Date ();
             const time = this.targetDate - currentDate;
             const timeForInterface = this.getTime(time);
-            refs.daysNum.textContent = timeForInterface[0];
-            refs.hourNum.textContent = timeForInterface[1];
-            refs.minNum.textContent = timeForInterface[2];
-            refs.secNum.textContent = timeForInterface[3]; 
+            this.daysNum.textContent = timeForInterface[0];
+            this.hourNum.textContent = timeForInterface[1];
+            this.minNum.textContent = timeForInterface[2];
+            this.secNum.textContent = timeForInterface[3]; 
+            this.getBoxStyle();
         }, 1000);
+    }
+
+    getBoxStyle () {
+        this.valuesBox.style = 'display: flex; justify-content: center;';
+        this.values.forEach(value => {
+            value.style = "display: flex; flex-direction: column; align-items: center; margin:10px;"
+        });
     }
 }
 
 const timer = new CountdownTimer({
-        selector: '#timer-1',
-        targetDate: new Date(2021, 11, 31, 23, 59, 59),
+    selector: '#timer-1',
+    targetDate: new Date(2021, 11, 31, 23, 59, 59),
 });
 
 timer.startTimer();
